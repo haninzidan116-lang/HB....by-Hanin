@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هل أنت محمد زيدان؟</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            transition: background 1s;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-family: 'Cairo', sans-serif;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background: #ee5253;
+        }
+
+        .btn-secondary {
+            background: #5f27cd;
+        }
+
+        .btn-secondary:hover {
+            background: #341f97;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Cairo', sans-serif;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* تنسيقات الاحتفال */
+        .celebration-bg {
+            background: linear-gradient(to bottom, #2c3e50, #fd746c);
+        }
+
+        .cake {
+            font-size: 100px;
+            animation: bounce 2s infinite;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            color: gold;
+            font-size: 20px;
+            animation: twinkle 1.5s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes textPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); color: #ff00de; }
+            100% { transform: scale(1); }
+        }
+
+        .happy-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff00de;
+            animation: textPop 1s infinite;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars" id="starsContainer"></div>
+
+    <div class="container" id="mainContainer">
+        
+        <!-- الخطوة 1: السؤال الرئيسي -->
+        <div id="step1">
+            <h1>هل أنت محمد زيدان؟</h1>
+            <button class="btn" onclick="goToStep(2)">نعم</button>
+            <button class="btn btn-secondary" onclick="location.reload()">لا</button>
+        </div>
+
+        <!-- الخطوة 2: إدخال اسم المصممة -->
+        <div id="step2" class="hidden">
+            <h2>أهلاً بك يا محمد!</h2>
+            <p>رجاءً أدخل اسم مصممة الموقع:</p>
+            <input type="text" id="designerName" placeholder="اسم المصممة">
+            <p>وصفتها بالنسبة لك:</p>
+            <input type="text" id="designerRole" placeholder="مثلاً: صديقتي / أختي">
+            <br>
+            <button class="btn" onclick="goToStep(3)">تالي</button>
+        </div>
+
+        <!-- الخطوة 3: لقطة الشاشة -->
+        <div id="step3" class="hidden">
+            <h2>الآن خذي لقطة للشاشة!</h2>
+            <p>تأكد من التقاط الصورة بشكل صحيح.</p>
+            <div class="cake">📸</div>
+            <br>
+            <button class="btn btn-secondary" onclick="goToStep(1)">الرجوع للخلف</button>
+            <button class="btn" onclick="goToStep(4)">استمرار</button>
+        </div>
+
+        <!-- الخطوة 4: إرسال الصورة -->
+        <div id="step4" class="hidden">
+            <h2>أرسل لقطة الشاشة للمصممة!</h2>
+            <p>هل قمت بإرسالها؟</p>
+            <div class="cake">📤</div>
+            <br>
+            <button class="btn btn-secondary" onclick="goToStep(3)">الرجوع للخلف</button>
+            <button class="btn" onclick="startCelebration()">تم الأمر</button>
+        </div>
+
+        <!-- الخطوة 5: الاحتفال -->
+        <div id="step5" class="hidden">
+            <div class="happy-text">Happy Birthday to yooou</div>
+            <div class="cake">🎂</div>
+            <h2>عيد ميلاد سعيد يا محمد!</h2>
+            <p>أتمنى لك عمراً طويلاً حتى سن 10,000,000 سنة!</p>
+            <p>كل عام وأنت بخير.</p>
+        </div>
+
+        <div class="footer">
+            <h2>جميع الحقوق محفوظه ©2026-منصه  birthday</h2>
+            تم التصميم من قبل <strong>Hanin </strong>
+        </div>
+    </div>
+
+    <script>
+        // دالة للتنقل بين الخطوات
+        function goToStep(stepNumber) {
+            // إخفاء جميع الخطوات
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById('step' + i).classList.add('hidden');
+            }
+            // إظهار الخطوة المطلوبة
+            document.getElementById('step' + stepNumber).classList.remove('hidden');
+        }
+
+        // دالة بدء الاحتفال
+        function startCelebration() {
+            goToStep(5);
+            
+            // تغيير الخلفية
+            document.body.classList.add('celebration-bg');
+            
+            // تكرار كلمة Happy Birthday (تأثير بصري بسيط)
+            const textElement = document.querySelector('.happy-text');
+            setInterval(() => {
+                textElement.innerText = "Happy Birthday to yooou";
+            }, 2000);
+
+            // إنشاء النجوم
+            createStars();
+        }
+
+        // دالة إنشاء النجوم
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            const starCount = 50;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.innerHTML = '★';
+                
+                // موقع عشوائي
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                
+                // تأخير عشوائي للوميض
+                star.style.animationDelay = Math.random() * 2 + 's';
+                
+                container.appendChild(star);
+            }
+        }
+    </script>
+</body>
+</html>
